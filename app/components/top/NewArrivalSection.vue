@@ -1,43 +1,70 @@
 <script setup>
-const newItems = [
-  {
-    name: 'Wool Knit Sweater',
-    price: 7800,
-    image: '/images/shohin/sweater.jpg'
-  },
-  {
-    name: 'Leather Mini Bag',
-    price: 12000,
-    image: '/images/shohin/leatherbag.webp'
-  },
-  {
-    name: 'iPhone Case',
-    price: 2500,
-    image: '/images/shohin/iphonecase.jpg',
-  },
-  {
-    name: 'Wireless Earbuds',
-    price: 8900,
-    image: '/images/shohin/earbuds.avif',
-  },
+import { onMounted, ref} from 'vue';
+import { useApi } from '~/composable/useApi';
 
-]
+const { apiFetch } = useApi();
+
+const newItems = ref([]);
+
+const getNew = async() => {
+  try{
+    const res = await apiFetch('/api/products/new?limit=4', {
+      method: "GET"
+    });
+    newItems.value = res.data
+  } catch (error) {
+    if(error.message) {
+      alert(error.message);
+    } else {
+      // 네트워크 오류 등
+      alert('서버와 통신 중 오류가 발생했습니다.');
+    }
+  }
+}
+
+onMounted(() => {
+  getNew();
+})
+
+// const newItems = [
+//   {
+//     name: 'Wool Knit Sweater',
+//     price: 7800,
+//     image: '/images/shohin/sweater.jpg'
+//   },
+//   {
+//     name: 'Leather Mini Bag',
+//     price: 12000,
+//     image: '/images/shohin/leatherbag.webp'
+//   },
+//   {
+//     name: 'iPhone Case',
+//     price: 2500,
+//     image: '/images/shohin/iphonecase.jpg',
+//   },
+//   {
+//     name: 'Wireless Earbuds',
+//     price: 8900,
+//     image: '/images/shohin/earbuds.avif',
+//   },
+
+// ]
 </script>
 <template>
   <section class="new-arrivals">
     <div class="section-header">
       <h2 class="section-title">New Arrivals</h2>
-      <NuxtLink to="/products" class="view-all-btn">View All ｰ></NuxtLink>
+      <NuxtLink to="/products/new" class="view-all-btn">View All →</NuxtLink>
     </div>
     <div class="category-grid">
       <div 
-        v-for="(item, index) in newItems"
-        :key="index"
+        v-for="item in newItems"
+        :key="item.id"
         class="category-item"
       >
-      <img :src="item.image" :alt="item.name" />
+      <img :src="item.image_url" :alt="item.name" />
       <h3 class="category-name">{{ item.name }}</h3>
-      <p class="category-desc">¥{{ item.price.toLocaleString() }}</p>
+      <p class="category-desc">¥{{ Number(item.price).toLocaleString() }}</p>
       </div>
     </div>
   </section>

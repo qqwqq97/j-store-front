@@ -10,7 +10,7 @@ const bestItems = [
   <section class="best-sellers">
     <div class="section-header">
       <h2 class="section-title">Best Sellers</h2>
-      <NuxtLink to="/bastsellers" class="view-all-btn">View All ｰ></NuxtLink>
+      <NuxtLink to="/bastsellers" class="view-all-btn">View All →</NuxtLink>
     </div>
     <div class="category-grid">
       <div

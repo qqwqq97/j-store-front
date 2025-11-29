@@ -14,5 +14,11 @@
     {
       "path": "./.nuxt/tsconfig.node.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "types": ["node"],
+    "strict": false,
+    "module": "esnext",
+    "moduleResolution": "bundler"
+  }
 }

@@ -1,23 +1,47 @@
 <script setup>
-const featuredCategories = [
-  { label: 'CLOTHING', img: '/images/categories/cat-clothing.jpg', path: '/' },
-  { label: 'COSMETICS', img: '/images/categories/cat-cosmetics.jpg', path: '/' },
-  { label: 'ACCESSORIES', img: '/images/categories/cat-accessories.jpg', path: '/' },
-  { label: 'ELECTRONICS', img: '/images/categories/cat-electronics.jpeg', path: '/' },
-]
+import { onMounted, ref} from 'vue';
+import { useApi } from '~/composable/useApi';
+
+const { apiFetch } = useApi();
+const featuredCategories = ref([]);
+
+const getCategoriesSection = async() => {
+  try {
+    const res = await apiFetch('/api/categories', {
+      method: "GET",
+    });
+    if(res.data) {
+      res.data.forEach(item => {
+        if(item.img !== null) {
+          featuredCategories.value.push(item)
+        }
+      });
+    }
+  } catch (error) {
+    if(error.message) {
+      alert(error.message);
+    } else {
+      // 네트워크 오류 등
+      alert('서버와 통신 중 오류가 발생했습니다.');
+    }
+  }
+}
+onMounted(() => {
+  getCategoriesSection();
+})
 </script>
 <template>
   <section class="category-section">
     <h2 class="section-title">SHOP BY CATEGORY</h2>
     <div class="category-grid">
       <div
-        v-for="(item, index) in featuredCategories"
-        :key="index"
+        v-for="(item, id) in featuredCategories"
+        :key="id"
         class="category-item"
       >
         <NuxtLink :to="item.path">
           <img :src="item.img" alt="item.label">
-          <span>{{ item.label }}</span>
+          <span>{{ item.name }}</span>
         </NuxtLink>
       </div>
     </div>

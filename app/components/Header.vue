@@ -1,14 +1,39 @@
 <script setup>
-const menuItems = [
-  { label: 'ALL', path: '/' },
-  { label: 'NEW', path: '/' },
-  { label: 'CLOTHING', path: '/' },
-  { label: 'COSMETICS', path: '/' },
-  { label: 'ACCESSORIES', path: '/' },
-  { label: 'PHONE', path: '/' },
-  { label: 'COMPUTERS', path: '/' },
-  { label: 'GROCERY', path: '/' },
-]
+import { onMounted, ref, watch} from 'vue';
+import { useApi } from '~/composable/useApi';
+import { useCart } from '~/stores/cart';
+
+const cartStore = useCart();
+
+const { apiFetch } = useApi();
+
+const menuItems = ref([]);
+
+const itemsCount = computed(() => cartStore.itemsCount)
+
+const getCategory = async() => {
+  try {
+    const res = await apiFetch('/api/categories', {
+      method: "GET",
+    });
+    if(res.data) {
+      menuItems.value = res.data;
+    }
+  } catch (error) {
+    if(error.message) {
+      alert(error.message);
+    } else {
+      // 네트워크 오류 등
+      alert('서버와 통신 중 오류가 발생했습니다.');
+    }
+  }
+}
+
+onMounted(() => {
+  getCategory();
+  cartStore.loadCart()
+});
+
 </script>
 
 <template>
@@ -31,10 +56,11 @@ const menuItems = [
 
       <!-- 사용자 액션 -->
       <div class="user-actions">
-        <div class="cart">
-          <img src="/images/cart.png" alt="cart" class="action-icon">
+        <NuxtLink to="/cart" class="cart">
+          <img src="/images/cart.png" alt="cart" class="action-icon cart-icon">
+          <span v-if="itemsCount > 0" class="cart-badge">{{ itemsCount }}</span>
           <span class="action-text">Cart</span>
-        </div>
+        </NuxtLink>
         <div class="user">
           <img src="/images/user.png" alt="user" class="action-icon">
           <span class="action-text">User</span>
@@ -45,8 +71,8 @@ const menuItems = [
     <!-- 네비게이션 메뉴 -->
     <nav class="main-nav">
       <ul class="menu-list">
-        <li v-for="item in menuItems" :key="item.path" class="menu-item">
-          <NuxtLink :to="item.path" class="menu-link">{{ item.label }}</NuxtLink>
+        <li v-for="item in menuItems" :key="item.id" class="menu-item">
+          <NuxtLink :to=item.path class="menu-link">{{ item.name }}</NuxtLink>
         </li>
       </ul>
     </nav>
@@ -150,6 +176,17 @@ const menuItems = [
   cursor: pointer;
 }
 
+.user-actions > .cart {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  color: #333;
+  cursor: pointer;
+  text-decoration: none;
+}
+
 .user-actions > div:hover .action-text {
   color: #007bff;
 }
@@ -158,6 +195,17 @@ const menuItems = [
   width: 24px;
   height: 24px;
   margin-bottom: 4px;
+}
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -16px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
 }
 
 /* ===== 네비게이션 메뉴 ===== */
