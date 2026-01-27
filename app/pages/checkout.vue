@@ -77,7 +77,13 @@ const checkout = async() => {
         product_id: item.id,
         quantity: item.quantity,
         price: item.price
-      }))
+      })),
+      address: {
+        shipping_zip: postal_code.value,
+        shipping_address1: prefecture.value + city.value + street.value,
+        shipping_address2: building.value,
+        shipping_phone: phone_number.value
+      }
     }
   })
 

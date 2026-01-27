@@ -26,29 +26,6 @@ onMounted(() => {
   getNew();
 })
 
-// const newItems = [
-//   {
-//     name: 'Wool Knit Sweater',
-//     price: 7800,
-//     image: '/images/shohin/sweater.jpg'
-//   },
-//   {
-//     name: 'Leather Mini Bag',
-//     price: 12000,
-//     image: '/images/shohin/leatherbag.webp'
-//   },
-//   {
-//     name: 'iPhone Case',
-//     price: 2500,
-//     image: '/images/shohin/iphonecase.jpg',
-//   },
-//   {
-//     name: 'Wireless Earbuds',
-//     price: 8900,
-//     image: '/images/shohin/earbuds.avif',
-//   },
-
-// ]
 </script>
 <template>
   <section class="new-arrivals">
@@ -62,7 +39,7 @@ onMounted(() => {
         :key="item.id"
         class="category-item"
       >
-      <img :src="item.image_url" :alt="item.name" />
+      <img :src="item.image_url_full" :alt="item.name" />
       <h3 class="category-name">{{ item.name }}</h3>
       <p class="category-desc">¥{{ Number(item.price).toLocaleString() }}</p>
       </div>

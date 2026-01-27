@@ -2,8 +2,11 @@
 import { onMounted, ref, watch} from 'vue';
 import { useApi } from '~/composable/useApi';
 import { useCart } from '~/stores/cart';
+import { useAuth } from '~/composable/useAuth';
 
+const router = useRouter();
 const cartStore = useCart();
+const auth = useAuth();
 
 const { apiFetch } = useApi();
 
@@ -26,6 +29,15 @@ const getCategory = async() => {
       // 네트워크 오류 등
       alert('서버와 통신 중 오류가 발생했습니다.');
     }
+  }
+}
+
+const onLogout = async () => {
+  try {
+    await auth.logout()
+    router.push('/login')
+  } catch (error) {
+    alert('로그아웃 중 오류가 발생했습니다.')
   }
 }
 
@@ -61,10 +73,30 @@ onMounted(() => {
           <span v-if="itemsCount > 0" class="cart-badge">{{ itemsCount }}</span>
           <span class="action-text">Cart</span>
         </NuxtLink>
-        <div class="user">
-          <img src="/images/user.png" alt="user" class="action-icon">
-          <span class="action-text">User</span>
-        </div>
+        <template v-if="!auth.loggedIn.value">
+          <NuxtLink to="/login" class="user">
+            <img src="/images/login.png" alt="user" class="action-icon">
+              <span class="action-text">Login</span>
+            </img>
+          </NuxtLink>
+          <NuxtLink to="/register" class="user">
+            <img src="/images/add-user.png" alt="user" class="action-icon">
+              <span class="action-text">Signup</span>
+            </img>
+          </NuxtLink>
+        </template>
+        <template v-else>
+          <NuxtLink to="/user" class="user">
+            <img src="/images/user.png" alt="user" class="action-icon">
+              <span class="action-text">User</span>
+            </img>
+          </NuxtLink>
+          <a class="logout" @click="onLogout">
+            <img src="/images/logout.png" alt="user" class="action-icon">
+              <span class="action-text">Logout</span>
+            </img>
+          </a>
+        </template>  
       </div>
     </div>
 
@@ -167,13 +199,14 @@ onMounted(() => {
   gap: 20px;
 }
 
-.user-actions > div {
+.user, .logout {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 12px;
   color: #333;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .user-actions > .cart {

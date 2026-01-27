@@ -45,7 +45,7 @@ onMounted(() => {
         :key="item.id"
         :to="`/products/${item.id}`" 
       >
-        <img :src="item.image_url" :alt="item.name" class="item-image" />
+        <img :src="item.image_url_full" :alt="item.name" class="item-image" />
         <div class="item-info">
           <p class="item-name">{{ item.name }}</p>
           <p class="item-price">¥{{ formatPrice(item.price) }}</p>
