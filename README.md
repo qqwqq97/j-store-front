@@ -95,7 +95,7 @@ Nuxtではフロント側の状態（useState）がページリロード時に�
 その分アプリ全体の構造や処理の流れを深く理解する良い経験となりました。
 
 ## 関連リポジトリ
-- Backend: https://github.com/qqwqq97/j-store-back.git（※別リポジトリ）
+- Backend: https://github.com/qqwqq97/j-store-back.git
 
 ### 環境変数について
 
