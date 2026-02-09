@@ -19,6 +19,7 @@ const fetchProductDetail = async() => {
       method: "GET"
     });
     product.value = res.data
+    console.log(product.value)
   } catch (error) {
     if(error.message) {
       alert(error.message)
@@ -52,7 +53,7 @@ const addToCart = () => {
     name: product.value.name,
     description: product.value.description,
     price: product.value.price,
-    image_url: product.value.image_url,
+    image_url: product.value.image_url_full,
     quantity: quantity.value
   }
   
@@ -76,7 +77,7 @@ onMounted(() => {
     <div v-if="loading" class="loading">Loading...</div>
     <div v-else class="product-detail">
       <div class="product-image">
-        <img :src="product.image_url" :alt="product.name">
+        <img :src="product.image_url_full" :alt="product.name">
       </div>
       <div class="product-info">
         <h1 class="product-name">{{ product.name }}</h1>

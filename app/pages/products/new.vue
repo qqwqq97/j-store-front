@@ -56,7 +56,9 @@ onMounted(() => {
 </template>
 <style>
 .new-container {
+  max-width: 1240px;
   padding: 2.5rem 2rem;
+  margin: 0 auto;
 }
 .page-title {
   text-align: center;
