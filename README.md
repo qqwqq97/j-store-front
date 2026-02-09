@@ -58,6 +58,11 @@ npm run dev
 ローカル起動後、以下のURLで確認できます。
 http://localhost:3000
 
+## 画面イメージ
+
+### トップページ
+![トップページ（PC）](./public/images/screenshots/top.png)
+
 
 ## 工夫した点・課題
 
