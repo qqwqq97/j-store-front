@@ -67,7 +67,7 @@ http://localhost:3000
 ![商品一覧（PC）](./public/images/screenshots/new.png)
 
 ### 商品詳細
-![商品詳細](./public/images/screenshots/new.png)
+![商品詳細](./public/images/screenshots/shohin.png)
 
 ### カート画面
 ![カート画面（PC）](./public/images/screenshots/cart.png)
