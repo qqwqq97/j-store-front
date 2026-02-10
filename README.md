@@ -63,6 +63,23 @@ http://localhost:3000
 ### トップページ
 ![トップページ（PC）](./public/images/screenshots/top.png)
 
+### 商品一覧
+![商品一覧（PC）](./public/images/screenshots/new.png)
+
+### 商品詳細
+![商品詳細](./public/images/screenshots/new.png)
+
+### カート画面
+![カート画面（PC）](./public/images/screenshots/cart.png)
+
+### カート画面詳細
+![カート画面詳細（PC）](./public/images/screenshots/cartDetail.png)
+
+### 決済画面（カート）
+![決済画面（カート）](./public/images/screenshots/checkout(cart).png)
+
+### 決済画面
+![決済画面](./public/images/screenshots/checkout.png)
 
 ## 工夫した点・課題
 
